@@ -1,0 +1,26 @@
+<?php
+
+namespace Src\Application\Customer\DTOs;
+
+use Illuminate\Http\Request;
+
+class CreateCustomerDTO
+{
+    public function __construct(
+        public string $name,
+        public string $email,
+        public string $phone,
+        public string $document
+    ) {}
+
+    public static function fromRequest(Request $request): self
+    {
+        return new self(
+            name: $request->input('name'),
+            email: $request->input('email'),
+            phone: $request->input('phone'),
+            document: $request->input('document')
+        );
+    }
+
+}
