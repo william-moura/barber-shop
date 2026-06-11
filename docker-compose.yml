@@ -37,7 +37,7 @@ services:
       - app_network
   queue-worker:
     build: .
-    container_name: queue-worker
+    container_name: queue-worker-barber
     restart: always
     command: php artisan queue:listen --tries=3 --timeout=90
     volumes:
@@ -49,7 +49,7 @@ services:
       - app_network
   scheduler:
     build: .
-    container_name: scheduler
+    container_name: scheduler-barber
     restart: always
     command: sh -c "while [ true ]; do php artisan schedule:run; sleep 60; done"
     volumes:
