@@ -1,16 +1,16 @@
 <?php
 
-namespace Src\Infrastructure\Customer\Persistence;
+namespace Src\Infrastructure\Customer\Repositores;
 
 use Src\Domain\Customer\Exceptions\CustomerNotFoundException;
 use Src\Domain\Customer\Repositories\CustomerRepositoryInterface;
 use Src\Domain\Customer\Entities\Customer;
-use Src\Infrastructure\Customer\Persistence\Models\Customer as CustomerModel;
+use Src\Infrastructure\Customer\Models\CustomerModel;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
     public function __construct(
-        private CustomerModel $model
+        private CustomerModel    $model
     ) {}
     public function create(Customer $customer): void
     {
