@@ -12,4 +12,5 @@ Route::get('/teste', function () {
         'message' => 'Hello World'
     ]);
 });
-Route::post('/barbearias', [BarbershopController::class, 'store']);
+Route::resource('/barbearias', BarbershopController::class);
+// Route::post('/barbearias', [BarbershopController::class, 'store']);

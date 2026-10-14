@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Src\Barbershop\Application\DTOs\BarbershopInputData;
 use Src\Barbershop\Application\UseCases\CreateBarbershopUseCase;
 use Exception;
+use Src\Barbershop\Application\UseCases\ListBarbershopUseCase;
 
 class BarbershopController extends Controller
 {
@@ -57,5 +58,12 @@ class BarbershopController extends Controller
     private function getExpressaoOuExecutarUseCase(BarbershopInputData $input)
     {
         return $this->createBarbershopUseCase->execute($input);
+    }
+
+    public function index(ListBarbershopUseCase $listBarbershopUseCase): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([            
+            'data' => $listBarbershopUseCase->execute()
+        ], 200);
     }
 }

@@ -10,4 +10,5 @@ interface BarbershopRepositoryInterface
     public function findById(BarbershopId $id): ?Barbershop;
     public function findBySlug(string $slug): ?Barbershop;
     public function findByCnpj(string $cnpj): ?Barbershop;
+    public function findAll(): array;
 }
