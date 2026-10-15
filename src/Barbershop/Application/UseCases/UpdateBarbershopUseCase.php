@@ -1,7 +1,6 @@
 <?php
 namespace Src\Barbershop\Application\UseCases;
 
-use Src\Barbershop\Application\DTOs\BarbershopInputData;
 use Src\Barbershop\Domain\Entities\Barbershop;
 use Src\Barbershop\Domain\Repositories\BarbershopRepositoryInterface;
 use Src\Shared\Domain\ValueObjects\BarbershopId;
