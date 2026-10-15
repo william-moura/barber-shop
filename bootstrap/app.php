@@ -15,5 +15,15 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(function (\DomainException $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 400);
+        });
+        $exceptions->render(function (\InvalidArgumentException $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 400);
+        });
         //
     })->create();

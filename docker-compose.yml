@@ -7,11 +7,15 @@ services:
     container_name: barbearia_app
     restart: unless-stopped
     working_dir: /var/www
+    environment:
+      # Corrige o erro "dubious ownership" do Git de forma global no container
+      - GIT_SAFE_DIRECTORY=*
+      # Redireciona o cache do composer para uma pasta temporária onde o root tem acesso livre
+      - COMPOSER_HOME=/tmp/.composer
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
       - .:/var/www
-      - /var/www/vendor
     ports:
       - "9000:9000"
     networks:
@@ -40,12 +44,12 @@ services:
     container_name: barbearia_db
     restart: unless-stopped
     ports:
-      - 3308:3306
+      - "3308:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: barbearia_db      
       MYSQL_PASSWORD: william
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_USER: william
     volumes:
       - db_data:/var/lib/mysql

@@ -20,18 +20,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Define o diretório de trabalho
 WORKDIR /var/www
 
-# COPIA os arquivos do seu projeto para o container
-COPY . /var/www
-
-# Ajusta as permissões dos arquivos copiados para o usuário do PHP
-RUN chown -R www-data:www-data /var/www
-
-# Muda para o usuário não-root
-USER www-data
-
-# Executa o instalador do Composer (agora ele vai encontrar o composer.json)
-RUN composer install --no-interaction --optimize-autoloader --no-dev
-
 EXPOSE 9000
 
 CMD ["php-fpm"]

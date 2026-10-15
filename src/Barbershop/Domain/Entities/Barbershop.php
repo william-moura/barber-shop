@@ -2,9 +2,11 @@
 namespace Src\Barbershop\Domain\Entities;
 
 use InvalidArgumentException;
+use Src\Shared\Domain\Entities\Entity;
 use Src\Shared\Domain\ValueObjects\BarbershopId;
+use Src\Shared\Domain\ValueObjects\ValueObject;
 
-class Barbershop
+class Barbershop implements Entity
 {
     public function __construct(
         private BarbershopId $id,
@@ -20,7 +22,7 @@ class Barbershop
         }
     }
 
-    public function getId(): BarbershopId
+    public function getId(): ValueObject
     {
         return $this->id;
     }

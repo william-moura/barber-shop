@@ -9,6 +9,8 @@ use Src\Barbershop\Application\DTOs\BarbershopInputData;
 use Src\Barbershop\Application\UseCases\CreateBarbershopUseCase;
 use Exception;
 use Src\Barbershop\Application\UseCases\ListBarbershopUseCase;
+use Src\Barbershop\Application\UseCases\ShowBarbershopUseCase;
+use Src\Barbershop\Application\UseCases\UpdateBarbershopUseCase;
 
 class BarbershopController extends Controller
 {
@@ -64,6 +66,32 @@ class BarbershopController extends Controller
     {
         return response()->json([            
             'data' => $listBarbershopUseCase->execute()
+        ], 200);
+    }
+    public function show(string $id, ShowBarbershopUseCase $showBarbershopUseCase): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'data' => $showBarbershopUseCase->execute($id)
+        ], 200);
+    }
+    public function update(string $id, Request $request, UpdateBarbershopUseCase $updateBarbershopUseCase): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+            'cnpj' => 'nullable|string|max:14',
+            'color' => 'nullable|string|max:7',
+            'phone' => 'nullable|string|max:15',
+        ]);
+        return response()->json([
+            'data' => $updateBarbershopUseCase->execute($id, $request->all())
+        ], 200);
+    }
+
+    public function destroy(string $id, DeleteBarbershopUseCase $deleteBarbershopUseCase): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'data' => $deleteBarbershopUseCase->execute($id)
         ], 200);
     }
 }

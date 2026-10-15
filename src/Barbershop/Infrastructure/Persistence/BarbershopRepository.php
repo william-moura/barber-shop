@@ -1,24 +1,21 @@
 <?php
 namespace Src\Barbershop\Infrastructure\Persistence;
 
+use Illuminate\Database\Eloquent\Model;
 use Src\Barbershop\Domain\Repositories\BarbershopRepositoryInterface;
 use Src\Barbershop\Domain\Entities\Barbershop;
+use Src\Shared\Domain\Entities\Entity;
 use Src\Shared\Domain\ValueObjects\BarbershopId;
 use App\Models\Barbershop as BarbershopModel;
+use Src\Shared\Infrastructure\Persistence\Repository;
 
-class BarbershopRepository implements BarbershopRepositoryInterface
+class BarbershopRepository extends Repository implements BarbershopRepositoryInterface
 {
-    public function save(Barbershop $barbershop): Barbershop
+    public function __construct(BarbershopModel $model)
     {
-        $data = $barbershop->toArray();        
-        $model = BarbershopModel::updateOrCreate(['id' => $barbershop->getId()->getValue()], $data);
-        return $this->toEntity($model);        
+        parent::__construct($model);
     }
-    public function findById(BarbershopId $id): ?Barbershop
-    {
-        $model = BarbershopModel::find($id);
-        return $model ? $this->toEntity($model) : null;
-    }
+
     public function findBySlug(string $slug): ?Barbershop
     {
         $model = BarbershopModel::where('slug', $slug)->first();
@@ -29,7 +26,7 @@ class BarbershopRepository implements BarbershopRepositoryInterface
         $model = BarbershopModel::where('cnpj', $cnpj)->first();
         return $model ? $this->toEntity($model) : null;
     }
-    private function toEntity(BarbershopModel $model): Barbershop 
+    protected function toEntity(Model $model): Entity
     {        
         return new Barbershop(
             id: new BarbershopId($model->id),
@@ -40,12 +37,5 @@ class BarbershopRepository implements BarbershopRepositoryInterface
             color: $model->color,
             isActive: (bool) $model->isActive
         );
-    }
-    public function findAll(): array
-    {
-        $models = BarbershopModel::all();        
-        return $models->map(function(BarbershopModel $model) {
-            return $this->toEntity($model)->toArray();
-        })->toArray();
     }
 }

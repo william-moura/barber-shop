@@ -4,7 +4,7 @@ namespace Src\Shared\Domain\ValueObjects;
 use InvalidArgumentException;
 use Illuminate\Support\Str;
 
-class BarbershopId
+class BarbershopId implements ValueObject
 {
     private string $id;
     public function __construct(?string $id = null)
